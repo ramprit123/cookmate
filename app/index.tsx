@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 
 import { supabase } from '~/utils/supabase';
 
@@ -17,10 +18,12 @@ export default function Home() {
     if (session) {
       router.replace('/(tabs)');
     } else {
-      router.replace('/sign-in');
+      router.replace('/welcome');
     }
   };
-
-  // Return loading state or null since this is just a router component
-  return null;
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size="large" />
+    </View>
+  );
 }

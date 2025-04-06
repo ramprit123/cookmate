@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
   return (
@@ -9,7 +10,7 @@ export default function TabLayout() {
         tabBarStyle: {
           paddingBottom: 5,
           paddingTop: 5,
-          height: 60,
+          height: Platform.OS === 'ios' ? 70 : 60,
         },
       }}
     >

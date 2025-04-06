@@ -1,15 +1,26 @@
 import { create } from 'zustand';
+import { Session } from '@supabase/supabase-js';
+import { supabase } from '~/utils/supabase';
 
-export interface BearState {
-  bears: number;
-  increasePopulation: () => void;
-  removeAllBears: () => void;
-  updateBears: (newBears: number) => void;
+interface AuthState {
+  session: Session | null;
+  user: any | null;
+  loading: boolean;
+  setSession: (session: Session | null) => void;
+  setUser: (user: any) => void;
+  setLoading: (loading: boolean) => void;
+  signOut: () => Promise<void>;
 }
 
-export const useStore = create<BearState>((set) => ({
-  bears: 0,
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
-  updateBears: (newBears) => set({ bears: newBears }),
+export const useStore = create<AuthState>(set => ({
+  session: null,
+  user: null,
+  loading: true,
+  setSession: session => set({ session }),
+  setUser: user => set({ user }),
+  setLoading: loading => set({ loading }),
+  signOut: async () => {
+    await supabase.auth.signOut();
+    set({ session: null, user: null });
+  },
 }));
