@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useMemo } from 'react';
 import { Image, Text, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { Button } from '~/components/Button';
 
 const IMAGE_LIST = [
@@ -36,7 +37,7 @@ const Welcome = () => {
             marginBottom: 10,
           }}
         >
-          <View className="flex flex-row gap-2.5">
+          <Animated.View className="flex flex-row gap-2.5">
             {randomImages.map((item, imageIndex) => (
               <Image
                 key={`${index}-${imageIndex}`}
@@ -44,7 +45,7 @@ const Welcome = () => {
                 className="h-[160px] w-[160px] object-cover"
               />
             ))}
-          </View>
+          </Animated.View>
         </Marquee>
       ))}
 
