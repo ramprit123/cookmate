@@ -1,9 +1,9 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Stack } from 'expo-router';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { ThemeProvider } from '~/components/ThemeContext';
 import { UserProvider } from '~/context/UserContext';
 import '../global.css';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Stack } from 'expo-router';
-import { ThemeProvider } from '~/components/ThemeContext';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 
@@ -13,12 +13,26 @@ export default function Layout() {
       <ThemeProvider>
         <GestureHandlerRootView>
           <QueryClientProvider client={queryClient}>
-            <Stack>
+            <Stack
+              screenOptions={{
+                animation: 'slide_from_right',
+                animationDuration: 200,
+                gestureEnabled: true,
+                gestureDirection: 'horizontal',
+                presentation: 'card',
+              }}
+            >
               <Stack.Screen
                 options={{
                   headerShown: false,
                 }}
                 name="welcome"
+              ></Stack.Screen>
+              <Stack.Screen
+                options={{
+                  headerShown: false,
+                }}
+                name="(auth)"
               ></Stack.Screen>
             </Stack>
           </QueryClientProvider>
