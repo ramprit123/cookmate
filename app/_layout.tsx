@@ -32,6 +32,12 @@ export default function Layout() {
                 options={{
                   headerShown: false,
                 }}
+                name="(tabs)"
+              ></Stack.Screen>
+              <Stack.Screen
+                options={{
+                  headerShown: false,
+                }}
                 name="(auth)"
               ></Stack.Screen>
             </Stack>

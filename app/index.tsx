@@ -1,24 +1,26 @@
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
 
-import { Button } from '~/components/Button';
-import { Container } from '~/components/Container';
-import { ScreenContent } from '~/components/ScreenContent';
+import { supabase } from '~/utils/supabase';
 
 export default function Home() {
   const router = useRouter();
-  return (
-    <>
-      <Stack.Screen
-        options={{
-          headerTitle: 'Home',
-          headerTitleAlign: 'center',
-          headerShown: false,
-        }}
-      />
-      <Container>
-        <ScreenContent path="app/index.tsx" title="Home" />
-        <Button title="Show Details" onPress={() => router.replace('/welcome')} />
-      </Container>
-    </>
-  );
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  const checkUser = async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (session) {
+      router.replace('/(tabs)');
+    } else {
+      router.replace('/sign-in');
+    }
+  };
+
+  // Return loading state or null since this is just a router component
+  return null;
 }
