@@ -3,15 +3,42 @@ import { Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider } from '~/components/ThemeContext';
 import { UserProvider } from '~/context/UserContext';
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+} from '@expo-google-fonts/poppins';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback } from 'react';
 import '../global.css';
 
+SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
 
 export default function Layout() {
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <UserProvider>
       <ThemeProvider>
-        <GestureHandlerRootView>
+        <GestureHandlerRootView onLayout={onLayoutRootView}>
           <QueryClientProvider client={queryClient}>
             <Stack
               screenOptions={{
